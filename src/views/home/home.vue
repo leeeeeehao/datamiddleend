@@ -28,7 +28,7 @@
         <a-sub-menu key="sub2">
           <span slot="title"><a-icon type="pull-request" /><span>转换</span></span>
           <a-menu-item key="2">
-            <router-link to="/databaseList">
+            <router-link to="/transformList">
               <span><a-icon type="unordered-list" />数据转换列表</span>
             </router-link>
           </a-menu-item>
