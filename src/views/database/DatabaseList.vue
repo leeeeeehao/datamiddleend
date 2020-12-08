@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <a-table rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList">
-      <a slot="name" slot-scope="text">{{ text }}</a>
+      <span slot="action" slot-scope="{ id,databaseName}">
+			  <a @click="del(databaseName)">删除</a>
+			  <a-divider type="vertical"/>
+			  <a @click="">修改</a>
+			</span>
     </a-table>
 
     <div class="divPagin">
@@ -20,6 +24,7 @@
 <script>
 
 import {getDatabaseList} from "@/api/home/database";
+import {delServer} from "@/api/home/systemVersion";
 
 const columns = [
   {
@@ -80,6 +85,18 @@ export default {
       });
       this.databaseList = r.data.list
       this.count = r.data.total
+    },
+    del(serverId) {
+      let let_t = this
+      let_t.$mc('确定要删除这个数据源吗?', async () => {
+        let res = await delServer({
+          "serverId": serverId,
+          "deleteUser": let_t.accountList.accountNickName
+        })
+        if (res.status !== true) return this.$msge('删除失败!');
+        this.getServerPage()
+        return this.$msgs('删除成功!');
+      });
     },
     onShowSizeChange(pageIndex, pageSize) {
       this.pageSize = pageSize;

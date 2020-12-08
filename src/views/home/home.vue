@@ -21,7 +21,15 @@
           <span slot="title"><a-icon type="database" /><span>数据源</span></span>
           <a-menu-item key="3">
             <router-link to="/databaseList">
-              <span>数据源列表</span>
+              <span><a-icon type="unordered-list" />数据源列表</span>
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
+        <a-sub-menu key="sub2">
+          <span slot="title"><a-icon type="pull-request" /><span>转换</span></span>
+          <a-menu-item key="3">
+            <router-link to="/databaseList">
+              <span><a-icon type="unordered-list" />数据转换列表</span>
             </router-link>
           </a-menu-item>
         </a-sub-menu>
