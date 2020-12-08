@@ -4,7 +4,8 @@ import NProgress from 'nprogress'
 
 var instance = axios.create({
     // baseURL:'http://192.168.2.43:10002/systemend/',
-    baseURL:'http://10.2.2.50:9007/datamiddleend/',
+    //baseURL:'http://10.2.2.50:8666/api/datamiddleend/',
+    baseURL:'/api',
     timeout:5000
 });
 

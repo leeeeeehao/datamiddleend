@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-    <h2 class="login-title">系统端后台登录</h2>
+    <h2 class="login-title">数据中台登录</h2>
     <a-form ref="form" :model="form" class="login-form">
       <h2 class="title">用户登录 LOGIN</h2>
       <a-form-item>
@@ -28,8 +28,8 @@ export default {
   data() {
     return {
       form: {
-        aoocuntNumber: "sysadmin",
-        aoocuntPwd: "Jhy123"
+        aoocuntNumber: "admin",
+        aoocuntPwd: "admin"
       }
     }
   },

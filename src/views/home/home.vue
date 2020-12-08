@@ -82,8 +82,8 @@
       };
     },
     created() {
-      this.getMenu()
-      this.getAccountInfo()
+      // this.getMenu()
+      // this.getAccountInfo()
     },
     methods: {
       logout() {

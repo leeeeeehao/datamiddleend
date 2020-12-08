@@ -1,9 +1,12 @@
 <template>
-  <a-table :columns="columns" :data-source="databaseList">
+  <a-table :pagination="false" :columns="columns" :data-source="databaseList">
     <a slot="name" slot-scope="text">{{ text }}</a>
   </a-table>
 </template>
 <script>
+
+import {getDatabaseList} from "@/api/home/database";
+
 const columns = [
   {
     title: '序号',
@@ -75,9 +78,9 @@ export default {
       databaseList: [],
     };
   }, created() {
-    this.get()
+    this.getList()
   }, methods: {
-    async get() {
+    async getList() {
       let r = await getDatabaseList();
       this.databaseList = r.data
     }
