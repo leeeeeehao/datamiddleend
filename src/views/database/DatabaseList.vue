@@ -23,8 +23,7 @@
 
 <script>
 
-import {getDatabaseList} from "@/api/home/database";
-import {delServer} from "@/api/home/systemVersion";
+import {delDatabase, getDatabaseList} from "@/api/home/database";
 
 const columns = [
   {
@@ -86,15 +85,14 @@ export default {
       this.databaseList = r.data.list
       this.count = r.data.total
     },
-    del(serverId) {
+    del(databaseName) {
       let let_t = this
       let_t.$mc('确定要删除这个数据源吗?', async () => {
-        let res = await delServer({
-          "serverId": serverId,
-          "deleteUser": let_t.accountList.accountNickName
+        let res = await delDatabase({
+          "databaseName": databaseName
         })
-        if (res.status !== true) return this.$msge('删除失败!');
-        this.getServerPage()
+        if (res.code != 200) return this.$msge('删除失败!');
+        this.getList()
         return this.$msgs('删除成功!');
       });
     },

@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider class="left-menu" v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo">{{collapsed?'冠群':'数据中台'}}</div>
+      <div class="logo" style="background: none">{{collapsed?'冠群':'数据中台'}}</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
 <!--        <a-sub-menu :key='item.menuId' v-for="item in menuList ">-->
 <!--          <span slot="title">-->
@@ -19,7 +19,7 @@
 <!--        </a-sub-menu>-->
         <a-sub-menu key="sub1">
           <span slot="title"><a-icon type="database" /><span>数据源</span></span>
-          <a-menu-item key="3">
+          <a-menu-item key="1">
             <router-link to="/databaseList">
               <span><a-icon type="unordered-list" />数据源列表</span>
             </router-link>
@@ -27,7 +27,7 @@
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <span slot="title"><a-icon type="pull-request" /><span>转换</span></span>
-          <a-menu-item key="3">
+          <a-menu-item key="2">
             <router-link to="/databaseList">
               <span><a-icon type="unordered-list" />数据转换列表</span>
             </router-link>

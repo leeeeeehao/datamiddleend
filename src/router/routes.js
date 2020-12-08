@@ -31,8 +31,7 @@ const routes = [
       {
         path:'/welcome',
         meta:{
-          title:'欢迎页',
-          model:'系统端'
+          title:'欢迎页'
         },
         component:()=> import('../views/common/welcome.vue')
       },
@@ -40,7 +39,7 @@ const routes = [
         path:'/databaseList',
         meta:{
           title:'数据源列表',
-          model:'系统端'
+          model: '数据源'
         },
         component:()=> import('../views/database/DatabaseList.vue')
       },
