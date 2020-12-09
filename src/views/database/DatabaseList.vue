@@ -109,6 +109,8 @@ export default {
       });
       this.databaseList = r.data.list
       this.count = r.data.total
+      this.pageIndex = r.data.pageNum
+      this.pageSize = r.data.pageSize
     },
     del(databaseName) {
       let let_t = this
@@ -122,6 +124,7 @@ export default {
       });
     },
     onShowSizeChange(pageIndex, pageSize) {
+      this.pageIndex = pageIndex;
       this.pageSize = pageSize;
       this.getList()
     },
@@ -153,7 +156,7 @@ export default {
             })
           } else {
             // 新增
-            let r = this.createDatabase(values,form)
+            let r = this.createDatabase(values, form)
 
           }
         } else {
@@ -167,7 +170,7 @@ export default {
       const form = this.$refs.createModal.form
       form.resetFields() // 清理表单数据（可不做）
     },
-    async createDatabase(values,form) {
+    async createDatabase(values, form) {
       let r = await createDatabase({
         "access": values.databaseType,
         "db": values.databaseName,
@@ -196,12 +199,6 @@ export default {
         }
 
       })
-    },
-    refresh(bool = false) {
-      bool && (this.localPagination = Object.assign({}, {
-        current: 1, pageSize: this.pageSize
-      }))
-      this.getList()
     }
   },
 };

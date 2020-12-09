@@ -1,4 +1,5 @@
-# vue_ant_design_sys
+# 数据中台
+框架:vue+ Ant Design Vue UI框架
 
 ## Project setup
 ```
@@ -7,7 +8,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
