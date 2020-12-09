@@ -13,7 +13,8 @@
     </div>
     <br>
 
-    <a-table rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList">
+    <a-table ref="table" rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList" :alert="true"
+             showPagination="auto">
       <span slot="action" slot-scope="{ id,name}">
 			  <a @click="del(name)">删除</a>
 			  <a-divider type="vertical"/>
@@ -36,7 +37,7 @@
 
 <script>
 import CreateForm from '../../components/modules/CreateForm'
-import {delDatabase, getDatabaseList} from "@/api/home/database";
+import {delDatabase, getDatabaseList, createDatabase} from "@/api/home/database";
 
 const columns = [
   {
@@ -146,26 +147,14 @@ export default {
               // 重置表单数据
               form.resetFields()
               // 刷新表格
-              this.$refs.table.refresh()
+              this.$refs.table.refresh(true)
 
               this.$message.info('修改成功')
             })
           } else {
             // 新增
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                resolve()
-              }, 1000)
-            }).then(res => {
-              this.visible = false
-              this.confirmLoading = false
-              // 重置表单数据
-              form.resetFields()
-              // 刷新表格
-              this.$refs.table.refresh()
+            let r = this.createDatabase(values,form)
 
-              this.$message.info('新增成功')
-            })
           }
         } else {
           this.confirmLoading = false
@@ -177,6 +166,42 @@ export default {
 
       const form = this.$refs.createModal.form
       form.resetFields() // 清理表单数据（可不做）
+    },
+    async createDatabase(values,form) {
+      let r = await createDatabase({
+        "access": values.databaseType,
+        "db": values.databaseName,
+        "host": values.hostName,
+        "name": values.name,
+        "password": values.password,
+        "port": values.port,
+        "type": values.databaseType,
+        "user": values.userName
+      });
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, 1000)
+      }).then(res => {
+        this.visible = false
+        this.confirmLoading = false
+        // 重置表单数据
+        form.resetFields()
+        // 刷新表格
+        this.getList()
+        if (r.code != 200) {
+          return this.$msgs('新增失败!' + r.message);
+        } else {
+          this.$message.info('新增成功')
+        }
+
+      })
+    },
+    refresh(bool = false) {
+      bool && (this.localPagination = Object.assign({}, {
+        current: 1, pageSize: this.pageSize
+      }))
+      this.getList()
     }
   },
 };
