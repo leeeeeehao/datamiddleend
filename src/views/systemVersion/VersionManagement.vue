@@ -5,7 +5,7 @@
 			  <a-button type="primary" size="large" icon="plus" @click="visible = true" >新增编目</a-button>
 			</a-col>
 			<a-col :span="12">
-			  <!-- <a-input-search v-model:value="value" placeholder="请输入服务类型" enter-button="搜索" size="large"
+			  <!-- <a-input-search v-modules:value="value" placeholder="请输入服务类型" enter-button="搜索" size="large"
 				 /> -->
 				 <a-select
 					show-search
@@ -14,7 +14,7 @@
 					style="width: 200px"
 					:filter-option="filterOption"
 					@change="handleChange"
-					
+
 				>
 					<a-select-option v-for="o in cataList" :value="o.serviceTypeId" :key="o.serviceTypeId">
 					{{o.serviceTypeName}}
@@ -22,7 +22,7 @@
 				</a-select>
 			</a-col>
 		  </a-row>
-		
+
 		  <br />
 		  <a-table class="table" rowKey="catalogueId" :pagination="false" :columns="columns" :data-source="data">
 			<span slot="action" slot-scope="{ catalogueId }">
@@ -51,7 +51,7 @@
 				<a-form-model-item label="端口" prop="">
 					<a-select></a-select>
 				</a-form-model-item>
-				
+
 			</a-form-model>
 
 
@@ -124,7 +124,7 @@ import {
 				value: '',
 				accountList: [],
 				visible:false,
-			
+
 			}
 		},
 		created() {
@@ -158,7 +158,7 @@ import {
 				this.getPage()
 			},
 			async add(){
-				
+
 			},
 
 			handleChange(v) {
@@ -175,7 +175,7 @@ import {
 
 		}
 	}
-	
+
 </script>
 
 <style>

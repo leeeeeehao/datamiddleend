@@ -1,8 +1,21 @@
 <template>
   <div id="app">
+    <div id="create">
+      <a-button type="primary" icon="plus" @click="handleAdd">新建数据源</a-button>
+      <create-form
+        ref="createModal"
+        :visible="visible"
+        :loading="confirmLoading"
+        :model="mdl"
+        @cancel="handleCancel"
+        @ok="handleOk"
+      />
+    </div>
+    <br>
+
     <a-table rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList">
-      <span slot="action" slot-scope="{ id,databaseName}">
-			  <a @click="del(databaseName)">删除</a>
+      <span slot="action" slot-scope="{ id,name}">
+			  <a @click="del(name)">删除</a>
 			  <a-divider type="vertical"/>
 			  <a @click="">修改</a>
 			</span>
@@ -17,12 +30,12 @@
         </template>
       </a-pagination>
     </div>
-  </div>
 
+  </div>
 </template>
 
 <script>
-
+import CreateForm from '../../components/modules/CreateForm'
 import {delDatabase, getDatabaseList} from "@/api/home/database";
 
 const columns = [
@@ -35,6 +48,11 @@ const columns = [
   },
   {
     title: '数据源名称',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: '数据库名称',
     dataIndex: 'databaseName',
     key: 'databaseName',
   },
@@ -65,12 +83,18 @@ const columns = [
 ];
 
 export default {
+  components: {
+    CreateForm
+  },
   data() {
     return {
-      pageIndex: 1,
-      pageSize: 10,
-      pageSizeOptions: ['1', '3', '5', '10', '50'],
-      count: 0,
+      pageIndex: 1,//页码
+      pageSize: 10,//页面条数
+      pageSizeOptions: ['1', '3', '5'],//页面条数选项
+      count: 0,//结果最大数量
+      mdl: null,
+      visible: false,//是否显示表单
+      confirmLoading: false,
       columns,
       databaseList: [],
     };
@@ -99,6 +123,60 @@ export default {
     onShowSizeChange(pageIndex, pageSize) {
       this.pageSize = pageSize;
       this.getList()
+    },
+    handleAdd() {
+      this.mdl = null
+      this.visible = true
+    },
+    handleOk() {
+      const form = this.$refs.createModal.form
+      this.confirmLoading = true
+      form.validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          if (values.id > 0) {
+            // 修改 e.g.
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve()
+              }, 1000)
+            }).then(res => {
+              this.visible = false
+              this.confirmLoading = false
+              // 重置表单数据
+              form.resetFields()
+              // 刷新表格
+              this.$refs.table.refresh()
+
+              this.$message.info('修改成功')
+            })
+          } else {
+            // 新增
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve()
+              }, 1000)
+            }).then(res => {
+              this.visible = false
+              this.confirmLoading = false
+              // 重置表单数据
+              form.resetFields()
+              // 刷新表格
+              this.$refs.table.refresh()
+
+              this.$message.info('新增成功')
+            })
+          }
+        } else {
+          this.confirmLoading = false
+        }
+      })
+    },
+    handleCancel() {
+      this.visible = false
+
+      const form = this.$refs.createModal.form
+      form.resetFields() // 清理表单数据（可不做）
     }
   },
 };

@@ -11,7 +11,13 @@ Vue.config.productionTip = false
 // 关闭调试插件提示
 Vue.config.devtools = false
 
-
+// 设置项目路由标题
+router.beforeEach((to, from, next)=>{
+  if(to.meta.title){
+    document.title = to.meta.title
+  }
+  next()
+})
 
 new Vue({
   router,
