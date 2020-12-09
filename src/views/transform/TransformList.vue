@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <a-table rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList">
-      <span slot="action" slot-scope="{ id,databaseName}">
-			  <a @click="del(databaseName)">删除</a>
+      <span slot="action" slot-scope="{ idTransformation,name}">
+			  <a @click="del(name)">删除</a>
 			  <a-divider type="vertical"/>
 			  <a @click="">修改</a>
 			</span>
@@ -12,8 +12,7 @@
       <a-pagination v-model:current="pageIndex" :page-size-options="pageSizeOptions" :total="count" show-size-changer
                     :page-size="pageSize" @showSizeChange="onShowSizeChange" @change="getList">
         <template #buildOptionText="props">
-          <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
-          <span v-else>全部</span>
+          <span v-if="props.value !== '50'">{{ props.value }}</span>
         </template>
       </a-pagination>
     </div>
@@ -21,7 +20,7 @@
 </template>
 <script>
 
-  import {getTransformList} from "@/api/home/transform";
+  import {getTransformList, delTransform} from "@/api/home/transform";
 
   const columns = [
     {
@@ -83,12 +82,25 @@
           this.pageIndex,
           this.pageSize
         );
-        this.databaseList = r.data.list
-        this.count = r.data.total
+        this.databaseList = r.data.list;
+        this.count = r.data.total;
+        console.log(r.data.total);
+      },
+      del(tranName) {
+        let let_t = this
+        let_t.$mc('确定要删除这个转换吗?', async () => {
+          let res = await delTransform({
+            "tranName": tranName
+          })
+          if (res.code != 200) return this.$msge('删除失败!');
+          this.getList()
+          return this.$msgs('删除成功!');
+        });
       },
       onShowSizeChange(pageIndex, pageSize) {
+        this.pageIndex = pageIndex;
         this.pageSize = pageSize;
-        this.getList()
+        this.getList();
       }
     }
   };
