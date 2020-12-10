@@ -11,4 +11,6 @@ export let createDatabase = param =>post('/datamiddleend/dataSource/add',param);
 
 export let getDatabaseInfo = param =>post('/datamiddleend/dataSource/findInfo',param); //查询数据源信息
 
+export let getFieldList = param =>post('/datamiddleend/dataSource/findInfo',param); //查询字段列表
+
 

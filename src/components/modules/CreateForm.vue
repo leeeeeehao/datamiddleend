@@ -17,7 +17,7 @@
         <a-form-item label="连接名称">
           <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '此项不能为空！'}]}]" />
         </a-form-item>
-        <a-form-item label="主机名称">
+        <a-form-item label="主机地址">
           <a-input v-decorator="['hostName', {rules: [{required: true, min: 1, message: '此项不能为空！'}]}]" />
         </a-form-item>
         <a-form-item label="数据库名称">

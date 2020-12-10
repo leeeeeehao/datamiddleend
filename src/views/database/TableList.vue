@@ -3,8 +3,8 @@
     <a-table ref="table" rowKey="id" :pagination="false" :columns="columns" :data-source="databaseInfoList"
              :alert="true"
              showPagination="auto">
-      <span slot="action" slot-scope="{id,text}">
-			  <a @click="">查看字段</a>
+      <span slot="action" slot-scope="{id,text,nodeId}">
+			  <a @click="gotoLink(nodeId,text)">查看字段</a>
 			</span>
     </a-table>
   </div>
@@ -58,7 +58,18 @@ export default {
         "nodeId": "table"
       });
       this.databaseInfoList = r.data
-    },
+    },gotoLink(databaseName,tableName) {
+      console.log('databaseName', databaseName)
+      console.log('tableName', tableName)
+      // this.$router.replace('/tableList')
+      this.$router.push({
+        name: 'fieldList',
+        params: {
+          databaseName: databaseName,
+          tableName:tableName
+        }
+      })
+    }
   }
 }
 </script>

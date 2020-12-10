@@ -67,7 +67,7 @@
       return {
         pageIndex: 1,
         pageSize: 5,
-        pageSizeOptions: ['1', '3', '5'],
+        pageSizeOptions: ['1', '3', '9'],
         count: 0,
         columns,
         databaseList: [],

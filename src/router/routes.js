@@ -46,10 +46,18 @@ const routes = [
         path:'/tableList',
         name: 'tableList',
         meta:{
-          title:'数据源详情',
+          title:'数据源表列表',
           model: '数据源列表'
         },
         component: () => import('../views/database/TableList.vue')
+      },{
+        path:'/fieldList',
+        name: 'fieldList',
+        meta:{
+          title:'字段列表',
+          model: '数据源表列表'
+        },
+        component: () => import('../views/database/FieldList.vue')
       },
       {
         path: '/transformList',

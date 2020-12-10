@@ -16,9 +16,11 @@
     <a-table ref="table" rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList" :alert="true"
              showPagination="auto">
       <span slot="action" slot-scope="{ id,name,databaseName}">
-			  <a @click="del(name)">删除</a>
-			  <a-divider type="vertical"/>
 			  <a @click="gotoLink(databaseName)">查看</a>
+        <a-divider type="vertical"/>
+        <a @click="">修改</a>
+        <a-divider type="vertical"/>
+        <a @click="del(name)">删除</a>
 			</span>
     </a-table>
 
@@ -91,7 +93,7 @@ export default {
     return {
       pageIndex: 1,//页码
       pageSize: 10,//页面条数
-      pageSizeOptions: ['1', '3', '5'],//页面条数选项
+      pageSizeOptions: ['1', '3', '9'],//页面条数选项
       count: 0,//结果最大数量
       mdl: null,
       visible: false,//是否显示表单
