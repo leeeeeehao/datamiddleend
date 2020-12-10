@@ -42,12 +42,20 @@ const routes = [
           model: '数据源'
         },
         component: () => import('../views/database/DatabaseList.vue')
+      },{
+        path:'/tableList',
+        name: 'tableList',
+        meta:{
+          title:'数据源详情',
+          model: '数据源列表'
+        },
+        component: () => import('../views/database/TableList.vue')
       },
       {
         path: '/transformList',
         meta: {
           title: '转换列表',
-          model: '系统端'
+          model: '转换'
         },
         component: () => import('../views/transform/TransformList.vue')
       },

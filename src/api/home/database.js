@@ -9,4 +9,6 @@ export let delDatabase = param => post('/datamiddleend/dataSource/del', param); 
 
 export let createDatabase = param =>post('/datamiddleend/dataSource/add',param); //创建数据源
 
+export let getDatabaseInfo = param =>post('/datamiddleend/dataSource/findInfo',param); //查询数据源信息
+
 

@@ -1,7 +1,7 @@
 <template>
   <a-modal
     title="新建数据源"
-    :width="640"
+    :width="450"
     :visible="visible"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"

@@ -15,10 +15,10 @@
 
     <a-table ref="table" rowKey="id" :pagination="false" :columns="columns" :data-source="databaseList" :alert="true"
              showPagination="auto">
-      <span slot="action" slot-scope="{ id,name}">
+      <span slot="action" slot-scope="{ id,name,databaseName}">
 			  <a @click="del(name)">删除</a>
 			  <a-divider type="vertical"/>
-			  <a @click="">修改</a>
+			  <a @click="gotoLink(databaseName)">查看</a>
 			</span>
     </a-table>
 
@@ -198,6 +198,16 @@ export default {
           this.$message.info('新增成功')
         }
 
+      })
+    },
+    gotoLink(databaseName) {
+      console.log('databaseName', databaseName)
+      // this.$router.replace('/tableList')
+      this.$router.push({
+        name: 'tableList',
+        params: {
+          databaseName: databaseName,
+        }
       })
     }
   },
