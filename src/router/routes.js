@@ -68,6 +68,14 @@ const routes = [
         component: () => import('../views/transform/TransformList.vue')
       },
       {
+        path: '/transformEdit',
+        meta: {
+          title: '编辑转换',
+          model: '转换列表'
+        },
+        component: () => import('../views/transform/TransformEdit.vue')
+      },
+      {
         path: '/serverManagement',
         meta: {
           model: '系统版本',

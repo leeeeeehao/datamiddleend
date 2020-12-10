@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider class="left-menu" v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo" style="background: none">{{ collapsed ? '冠群' : '数据中台' }}</div>
+      <div class="logo" style="background: none"><img style="width: 40px" src="../../assets/logo2.png">{{ collapsed ? '冠群' : '数据中台' }}</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
         <!--        <a-sub-menu :key='item.menuId' v-for="item in menuList ">-->
         <!--          <span slot="title">-->
