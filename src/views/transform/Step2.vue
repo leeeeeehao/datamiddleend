@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form :form="form" style="max-width: 500px; margin: 40px auto 0;">
+    <a-form :form="form" style="max-width: 650px; margin: 40px auto 0;">
       <a-alert
         :closable="true"
         message="确认提交后，将保存这个执行方案"
@@ -52,35 +52,80 @@
       >
         <a-input v-decorator="['commitSize', { initialValue: 50, rules: [{required: true, message: '请填写提交记录数量'}] }]"/>
       </a-form-item>
-
-      <a-form-item
-        label="收款人姓名"
-        :labelCol="labelCol"
-        :wrapperCol="wrapperCol"
-        class="stepFormText"
-      >
-        Alex
-      </a-form-item>
-      <a-form-item
-        label="转账金额"
-        :labelCol="labelCol"
-        :wrapperCol="wrapperCol"
-        class="stepFormText"
-      >
-        ￥ 5,000.00
-      </a-form-item>
       <a-divider/>
-      <a-form-item
-        label="支付密码"
-        :labelCol="labelCol"
-        :wrapperCol="wrapperCol"
-        class="stepFormText"
+
+      <a-form-model
+        ref="dynamicValidateForm"
+        :model="dynamicValidateForm"
+        v-bind="formItemLayoutWithOutLabel"
+        style="margin-left: 25px"
       >
-        <a-input
-          type="password"
-          style="width: 80%;"
-          v-decorator="['paymentPassword', { initialValue: '123456', rules: [{required: true, message: '请输入支付密码'}] }]"/>
-      </a-form-item>
+        <a-row :gutter="24">
+          <a-col :span="12" >
+        <a-form-model-item
+          v-for="(domain, index) in dynamicValidateForm.domains"
+          :key="domain.key"
+          v-bind="index === 0 ? formItemLayout : {}"
+          :label="index === 0 ? '目标:' : ''"
+          :prop="'domains.' + index + '.value'"
+          :rules="{
+
+        required: true,
+        message: '表字段不能为空',
+        trigger: 'blur',
+      }"
+        >
+          <a-input
+            v-model="domain.value"
+            placeholder="目标表字段"
+            style="width: 70%; margin-right: 0px;margin-left: 20px"
+          />
+<!--          <a-icon-->
+<!--            v-if="dynamicValidateForm.domains.length > 1"-->
+<!--            class="dynamic-delete-button"-->
+<!--            type="minus-circle-o"-->
+<!--            :disabled="dynamicValidateForm.domains.length === 1"-->
+<!--            @click="removeDomain(domain)"-->
+<!--          />-->
+        </a-form-model-item>
+          </a-col>
+          <a-col :span="12">
+        <a-form-model-item
+          v-for="(domain2, index2) in dynamicValidateForm.domains2"
+          :key="domain2.key"
+          v-bind="index2 === 0 ? formItemLayout : {}"
+          :label="index2 === 0 ? '源:' : ''"
+          :prop="'domains.' + index2 + '.value'"
+          :rules="{
+        required: true,
+        message: '流字段不能为空',
+        trigger: 'blur',
+      }"
+        >
+          <a-input
+            v-model="domain2.value"
+            placeholder="源表字段"
+            style="width: 70%; margin-right: 8px ;margin-left: 20px"
+          />
+          <a-icon
+            v-if="dynamicValidateForm.domains2.length > 1"
+            class="dynamic-delete-button"
+            type="minus-circle-o"
+            :disabled="dynamicValidateForm.domains2.length === 1"
+            @click="removeDomain(domain2)"
+          />
+        </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-form-model-item v-bind="formItemLayoutWithOutLabel">
+          <a-button type="dashed" style="width: 60%;margin-left: 40px" @click="addDomain">
+            <a-icon type="plus" /> 添加字段映射
+          </a-button>
+        </a-form-model-item>
+
+
+      </a-form-model>
+
       <a-form-item :wrapperCol="{span: 19, offset: 5}">
         <a-button :loading="loading" type="primary" @click="nextStep">提交</a-button>
         <a-button style="margin-left: 8px" @click="prevStep">上一步</a-button>
@@ -105,6 +150,26 @@ export default {
       databaseList: [],
       databaseInfoList:[] ,
       defaultDatabase:'1',
+      formItemLayout: {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 4 },
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 20 },
+        },
+      },
+      formItemLayoutWithOutLabel: {
+        wrapperCol: {
+          xs: { span: 24, offset: 0 },
+          sm: { span: 20, offset: 4 },
+        },
+      },
+      dynamicValidateForm: {
+        domains: [],
+        domains2: []
+      },
     }
   },
   created() {
@@ -112,6 +177,38 @@ export default {
     // this.getInfoList()
   },
   methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    removeDomain(item) {
+      let index = this.dynamicValidateForm.domains2.indexOf(item);
+      if (index !== -1) {
+        this.dynamicValidateForm.domains.splice(index, 1);
+        this.dynamicValidateForm.domains2.splice(index, 1);
+      }
+    },
+    addDomain() {
+      console.log('values',this.dynamicValidateForm.domains)
+      console.log('values2',this.dynamicValidateForm.domains2)
+      this.dynamicValidateForm.domains.push({
+        value: '',
+        key: Date.now(),
+      });
+      this.dynamicValidateForm.domains2.push({
+        value: '',
+        key: Date.now()+1,
+      });
+    },
     nextStep() {
       const that = this
       const {form: {validateFields}} = this
@@ -171,5 +268,19 @@ export default {
     line-height: 22px;
   }
 }
-
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 </style>
