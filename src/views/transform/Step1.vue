@@ -13,7 +13,7 @@
         :labelCol="labelCol"
         :wrapperCol="wrapperCol"
       >
-        <a-input v-decorator="['name', { initialValue: '抽取', rules: [{required: true, message: '请填写抽取名称'}] }]"/>
+        <a-input maxLength="10" v-decorator="['name', { initialValue: '抽取', rules: [{required: true, message: '请填写抽取名称'}] }]"/>
       </a-form-item>
       <a-form-item
         label="数据库连接"
@@ -31,7 +31,7 @@
         :labelCol="labelCol"
         :wrapperCol="wrapperCol"
       >
-        <a-textarea v-decorator="['sql', { rules: [{required: true, message: '请填写抽取SQL'}] }]"/>
+        <a-textarea maxLength="60" v-decorator="['sql', { rules: [{required: true, message: '请填写抽取SQL'}] }]"/>
       </a-form-item>
       <a-form-item :wrapperCol="{span: 19, offset: 5}">
         <a-button type="primary" @click="nextStep">下一步</a-button>

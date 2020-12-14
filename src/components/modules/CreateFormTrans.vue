@@ -15,10 +15,10 @@
         </a-form-item>
 
         <a-form-item label="名称">
-          <a-input v-decorator="['name', {rules: [{required: true, min: 1, message: '此项不能为空！'}]}]"/>
+          <a-input maxLength="15" v-decorator="['name', {rules: [{required: true, min: 1, message: '此项不能为空！'}]}]"/>
         </a-form-item>
         <a-form-item label="描述">
-          <a-input v-decorator="['desc']"/>
+          <a-textarea maxLength="50" :rows="4" v-decorator="['desc']"/>
         </a-form-item>
       </a-form>
     </a-spin>

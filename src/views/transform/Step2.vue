@@ -12,7 +12,7 @@
         :labelCol="labelCol"
         :wrapperCol="wrapperCol"
       >
-        <a-input v-decorator="['stepName', { initialValue: '表输出', rules: [{required: true, message: '请填写提交记录数量'}] }]"/>
+        <a-input maxLength="15" v-decorator="['stepName', { initialValue: '表输出', rules: [{required: true, message: '请填写提交记录数量'}] }]"/>
       </a-form-item>
       <a-form-item
         label="数据库连接"
