@@ -1,6 +1,13 @@
 <template>
   <div>
+
     <a-form :form="form" style="max-width: 500px; margin: 40px auto 0;">
+
+      <a-alert
+        :closable="true"
+        message="请依序填写抽取名称、选择数据库连接、填写抽取的SQL"
+        style="margin-bottom: 24px; "
+      />
       <a-form-item
         label="抽取名称"
         :labelCol="labelCol"
@@ -43,6 +50,10 @@
 
 <script>
 import {getDatabaseList} from "@/api/home/database";
+import pick from "lodash.pick";
+
+// 表单字段
+const fields = ['stepName', 'databaseName','sql']
 
 export default {
   name: 'Step1',
@@ -56,6 +67,13 @@ export default {
   },
   created() {
     this.getDatabaseInfo()
+    // 防止表单未注册
+    fields.forEach(v => this.form.getFieldDecorator(v))
+
+    // 当 model 发生改变时，为表单设置值
+    this.$watch('model', () => {
+      this.model && this.form.setFieldsValue(pick(this.model, fields))
+    })
   },
   methods: {
     nextStep() {
@@ -63,7 +81,14 @@ export default {
       // 先校验，通过表单校验后，才进入下一步
       validateFields((err, values) => {
         if (!err) {
+          // console.log('sql',values.sql)
+          // console.log('转换名称',values.name)
+          // console.log('数据库连接',values.dbConnection)
+          sessionStorage.setItem('dbConnection', values.dbConnection);
+          sessionStorage.setItem('sql', values.sql);
+          sessionStorage.setItem('name', values.name);
           this.$emit('nextStep')
+
         }
       })
     },

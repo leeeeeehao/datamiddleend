@@ -69,6 +69,7 @@ const routes = [
       },
       {
         path: '/transformEdit',
+        name: 'transformEdit',
         meta: {
           title: '编辑转换',
           model: '转换列表'

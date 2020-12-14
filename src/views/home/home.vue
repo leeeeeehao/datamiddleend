@@ -26,7 +26,7 @@
           </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
-          <span slot="title"><a-icon type="pull-request"/><span>ETL</span></span>
+          <span slot="title"><a-icon type="pull-request"/><span>数据抽取</span></span>
           <a-menu-item key="2">
             <router-link to="/transformList">
               <span><a-icon type="unordered-list"/>数据转换列表</span>

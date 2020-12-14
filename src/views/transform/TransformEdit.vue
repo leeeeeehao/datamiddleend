@@ -41,6 +41,7 @@ export default {
     // handler
     nextStep () {
       if (this.currentTab < 2) {
+        sessionStorage.setItem('transName', this.$route.params.transName);
         this.currentTab += 1
       }
     },

@@ -17,7 +17,9 @@
       <span slot="action" slot-scope="{ idTransformation,name}">
 			  <a @click="del(name)">删除</a>
 			  <a-divider type="vertical"/>
-			  <a @click="gotoLink()">编辑</a>
+			  <a @click="gotoLink(name)">编辑</a>
+        <a-divider type="vertical"/>
+        <a @click="execute(name)">执行</a>
 			</span>
     </a-table>
 
@@ -35,6 +37,7 @@
 
 import {getTransformList, delTransform, createTransform} from "@/api/home/transform";
 import CreateFormTrans from "@/components/modules/CreateFormTrans";
+import {executeTransform, previewLogsTransform} from "@/api/home/transform";
 
 const columns = [
   {
@@ -140,6 +143,35 @@ export default {
         }
       })
     },
+    async execute(transName) {
+      let let_t = this
+      let_t.$mc('确定要执行这个转换吗?', async () => {
+        let r = await executeTransform({
+          "transName": transName
+        })
+        if (r.code != 200) {
+          return this.$msge('执行失败!');
+        } else {
+          this.$message.info('执行成功')
+          console.log('message', r.message);
+          this.getLog(r.message)
+
+        }
+      });
+
+    },
+    async getLog(logChannelId) {
+      console.log('logChannelId', logChannelId);
+      let res = await previewLogsTransform(logChannelId)
+      console.log('日志',res.data);
+      this.$notification.open({
+        message: '数据抽取执行结果:',
+        description: res.data,
+        onClick: () => {
+          console.log('Notification Clicked!');
+        },
+      });
+    },
     onShowSizeChange(pageIndex, pageSize) {
       this.pageIndex = pageIndex;
       this.pageSize = pageSize;
@@ -187,8 +219,14 @@ export default {
         }
       })
     },
-    gotoLink() {
-      this.$router.replace('/transformEdit')
+    gotoLink(name) {
+      console.log(name)
+      this.$router.push({
+        name: 'transformEdit',
+        params: {
+          transName: name
+        }
+      })
     }
   }
 };
