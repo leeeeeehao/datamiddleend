@@ -26,16 +26,8 @@
           </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
-          <span slot="title"><a-icon type="database"/><span>模板</span></span>
-          <a-menu-item key="2">
-            <router-link to="/databaseList">
-              <span><a-icon type="unordered-list"/>模板列表</span>
-            </router-link>
-          </a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub3">
           <span slot="title"><a-icon type="pull-request"/><span>数据抽取</span></span>
-          <a-menu-item key="3">
+          <a-menu-item key="2">
             <router-link to="/transformList">
               <span><a-icon type="unordered-list"/>数据转换列表</span>
             </router-link>
