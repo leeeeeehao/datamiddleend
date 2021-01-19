@@ -4,7 +4,6 @@ import router from './router'
 import store from './store'
 import './plugins/hy.mixin'
 import 'nprogress/nprogress.css'
-// import 'ant-design-vue/dist/antd.less'
 
 // 关闭生产提示
 Vue.config.productionTip = false

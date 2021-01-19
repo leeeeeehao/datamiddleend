@@ -26,22 +26,30 @@
           </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
-          <span slot="title"><a-icon type="pull-request"/><span>数据抽取</span></span>
+          <span slot="title"><a-icon type="database"/><span>模板</span></span>
           <a-menu-item key="2">
+            <router-link to="/databaseList">
+              <span><a-icon type="unordered-list"/>模板列表</span>
+            </router-link>
+          </a-menu-item>
+        </a-sub-menu>
+        <a-sub-menu key="sub3">
+          <span slot="title"><a-icon type="pull-request"/><span>数据抽取</span></span>
+          <a-menu-item key="3">
             <router-link to="/transformList">
               <span><a-icon type="unordered-list"/>数据转换列表</span>
             </router-link>
           </a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="sub3">
+        <a-sub-menu key="sub4">
           <span slot="title"><a-icon type="form"/><span>日志</span></span>
-          <a-menu-item key="3">
+          <a-menu-item key="4">
             <span><a-icon type="unordered-list"/>日志列表</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="sub4">
+        <a-sub-menu key="sub5">
           <span slot="title"><a-icon type="user" /><span>个人设置</span></span>
-          <a-menu-item key="4">
+          <a-menu-item key="5">
             <span><a-icon type="unordered-list"/>设置</span>
           </a-menu-item>
         </a-sub-menu>
@@ -53,7 +61,7 @@
                 @click="() => (collapsed = !collapsed)"/>
         <a-dropdown class="flex">
           <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-            欢迎您:{{ accountList.accountNickName }}
+            欢迎您:admin
             <a-icon type="down"/>
           </a>
           <a-menu slot="overlay">
