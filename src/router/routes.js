@@ -77,6 +77,14 @@ const routes = [
         component: () => import('../views/transform/TransformEdit.vue')
       },
       {
+        path: '/tempTable',
+        meta: {
+          model: '模板管理',
+          title: '模板管理'
+        },
+        component: () => import('../views/temp/temptable.vue')
+      },
+      {
         path: '/serverManagement',
         meta: {
           model: '系统版本',
