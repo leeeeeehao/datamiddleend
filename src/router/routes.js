@@ -86,6 +86,7 @@ const routes = [
       },
       {
         path: '/tempInfo',
+        name: 'tempInfo',
         meta: {
           model: '模板详情',
           title: '模板详情'

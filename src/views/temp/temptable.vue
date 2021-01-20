@@ -151,7 +151,7 @@ export default {
       console.log('databaseName', databaseName)
       // this.$router.replace('/tableList')
       this.$router.push({
-        name: 'tableList',
+        name: 'tempInfo',
         params: {
           databaseName: databaseName,
         }
