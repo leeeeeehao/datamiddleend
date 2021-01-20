@@ -1,69 +1,95 @@
 <template>
-  <div class="clearfix">
-    <a-upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      list-type="picture-card"
-      :file-list="fileList"
-      @preview="handlePreview"
-      @change="handleChange"
-    >
-
-    </a-upload>
-    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-      <img alt="example" style="width: 100%" :src="previewImage" />
-    </a-modal>
+  <div style="background-color: #ececec; padding: 20px;">
+    <a-row :gutter="16">
+      <a-col :span="10">
+        <a-card title="身份证" :bordered="true">
+          <a-card-grid style="width:100%;text-align:center">
+            <img src="../../assets/sfz.jpg"/>
+          </a-card-grid>
+        </a-card>
+      </a-col>
+      <a-col :span="13">
+        <a-card title="模板扩展数据信息" :bordered="true">
+          <a-table ref="table" rowKey="id" :pagination="false" :columns="columns" :data-source="kzList" :alert="true"
+                   showPagination="auto">
+          </a-table>
+          <div class="divPagin">
+            <a-pagination v-model:current="pageIndex" :page-size-options="pageSizeOptions" :total="count" show-size-changer
+                          :page-size="pageSize" @showSizeChange="onShowSizeChange" @change="kzList">
+              <template #buildOptionText="props">
+                <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
+                <span v-else>全部</span>
+              </template>
+            </a-pagination>
+          </div>
+        </a-card>
+      </a-col>
+    </a-row>
   </div>
 </template>
 <script>
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
+const columns = [
+  {
+    title: '序号',
+    dataIndex: 'id',
+    key: 'id',
+    scopedSlots: {customRender: 'id'},
+    width: 100
+  },
+  {
+    title: '扩展字段',
+    dataIndex: 'kzKey',
+    key: 'kzKey',
+  },
+  {
+    title: '扩展字段名称',
+    dataIndex: 'kzName',
+    key: 'kzName',
+  },
+  {
+    title: '字段类型',
+    dataIndex: 'type',
+    key: 'type',
+    ellipsis: true,
+  },
+  {
+    title: '字段长度',
+    dataIndex: 'length',
+    key: 'length',
+    ellipsis: true,
+  }
+];
 export default {
   data() {
     return {
-      previewVisible: false,
-      previewImage: '../../assets/logo2.png',
-      fileList: [
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          src: '../../assets/logo2.png'
-        },
-      ],
+      pageIndex: 1,//页码
+      pageSize: 10,//页面条数
+      pageSizeOptions: ['1', '3', '9'],//页面条数选项
+      count: 0,//结果最大数量
+      columns,
+      kzList: [
+        {id: 1, kzKey: "KZ_XM", kzName: "姓名", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_MZ", kzName: "民族", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+
+      ]
     };
   },
-  methods: {
-    handleCancel() {
-      this.previewVisible = false;
+  methods:{
+    onShowSizeChange(pageIndex, pageSize) {
+      this.pageIndex = pageIndex;
+      this.pageSize = pageSize;
+      this.getList()
     },
-    async handlePreview(file) {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj);
-      }
-      this.previewImage = file.url || file.preview;
-      this.previewVisible = true;
-    },
-    handleChange({ fileList }) {
-      this.fileList = fileList;
-    },
-  },
-};
+  }
+}
 </script>
-<style>
-/* you can make up upload button and sample style by using stylesheets */
-.ant-upload-select-picture-card i {
-  font-size: 32px;
-  color: #999;
-}
-
-.ant-upload-select-picture-card .ant-upload-text {
-  margin-top: 8px;
-  color: #666;
-}
-</style>
