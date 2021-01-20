@@ -85,6 +85,14 @@ const routes = [
         component: () => import('../views/temp/temptable.vue')
       },
       {
+        path: '/tempInfo',
+        meta: {
+          model: '模板详情',
+          title: '模板详情'
+        },
+        component: () => import('../views/temp/TempInfo.vue')
+      },
+      {
         path: '/serverManagement',
         meta: {
           model: '系统版本',
