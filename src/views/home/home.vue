@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider class="left-menu" v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo" style="background: none"><img style="width: 40px" src="../../assets/logo2.png">{{ collapsed ? '冠群' : '数据中台' }}</div>
+      <div class="logo" style="background: none"><img style="width: 40px" src="../../assets/logo2.png">{{ collapsed ? '冠群' : '证照转换平台' }}</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
         <!--        <a-sub-menu :key='item.menuId' v-for="item in menuList ">-->
         <!--          <span slot="title">-->
@@ -18,38 +18,30 @@
 
         <!--        </a-sub-menu>-->
         <a-sub-menu key="sub1">
-          <span slot="title"><a-icon type="database"/><span>数据源</span></span>
+          <span slot="title"><a-icon type="rocket" /><span>证照生成</span></span>
           <a-menu-item key="1">
-            <router-link to="/databaseList">
-              <span><a-icon type="unordered-list"/>数据源列表</span>
+            <router-link to="/transformList">
+              <span><a-icon type="unordered-list"/>证照生成列表</span>
             </router-link>
           </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
-          <span slot="title"><a-icon type="pull-request"/><span>数据抽取</span></span>
+          <span slot="title"><a-icon type="pull-request"/><span>证照管理</span></span>
           <a-menu-item key="2">
-            <router-link to="/transformList">
-              <span><a-icon type="unordered-list"/>数据转换列表</span>
+            <router-link to="/LicenseManagement">
+              <span><a-icon type="unordered-list"/>证照生成列表</span>
             </router-link>
           </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub3">
-          <span slot="title"><a-icon type="rocket"/><span>模板管理</span></span>
-          <a-menu-item key="3">
-            <router-link to="/tempTable">
-              <span><a-icon type="unordered-list"/>模板管理列表</span>
-            </router-link>
-          </a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub4">
           <span slot="title"><a-icon type="form"/><span>日志</span></span>
-          <a-menu-item key="4">
+          <a-menu-item key="3">
             <span><a-icon type="unordered-list"/>日志列表</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="sub5">
+        <a-sub-menu key="sub4">
           <span slot="title"><a-icon type="user" /><span>个人设置</span></span>
-          <a-menu-item key="5">
+          <a-menu-item key="4">
             <span><a-icon type="unordered-list"/>设置</span>
           </a-menu-item>
         </a-sub-menu>

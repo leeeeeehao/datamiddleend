@@ -14,6 +14,14 @@ export let executeTransform = param => post('/datamiddleend/trans/execute', para
 
 export let previewLogsTransform = param1 => get('/datamiddleend/trans/previewLogs/' + param1); //查询执行转换结果
 
+export let getTypeList = param => get('/transForm/typeList');//查询证照分类
+
+export let start = param => post('/transForm/start', param); //开始生成证照
+
+export let stop = param => post('/transForm/stop/' + param); //暂停生成证照
+
+
+
 
 
 

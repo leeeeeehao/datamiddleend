@@ -1,76 +1,53 @@
 <template>
   <div id="app">
-
-    <div id="create">
-      <a-button type="primary" icon="plus" @click="handleAdd">新建转换</a-button>
-      <create-form-trans
-        ref="createModal"
-        :visible="visible"
-        :loading="confirmLoading"
-        :model="mdl"
-        @cancel="handleCancel"
-        @ok="handleOk"
-      />
-    </div>
     <br>
-    <a-table rowKey="key" :pagination="false" :columns="columns" :data-source="databaseList">
-      <span slot="action" slot-scope="{ idTransformation,name}">
-			  <a @click="del(name)">删除</a>
-			  <a-divider type="vertical"/>
-			  <a @click="gotoLink(name)">编辑</a>
+    <a-table rowKey="key" :pagination="false" :columns="columns" :data-source="licenseTypeList">
+      <span slot="action" slot-scope="{ typeId,typeCode}">
+<!--			  <a @click="del(name)">删除</a>-->
+<!--			  <a-divider type="vertical"/>-->
+<!--			  <a @click="gotoLink(name)">编辑</a>-->
+<!--        <a-divider type="vertical"/>-->
+        <a @click="start(typeCode)">开始</a>
         <a-divider type="vertical"/>
-        <a @click="execute(name)">执行</a>
+        <a @click="stop(typeCode)">暂停</a>
 			</span>
     </a-table>
 
-    <div class="divPagin">
-      <a-pagination v-model:current="pageIndex" :page-size-options="pageSizeOptions" :total="count" show-size-changer
-                    :page-size="pageSize" @showSizeChange="onShowSizeChange" @change="getList">
-        <template #buildOptionText="props">
-          <span v-if="props.value !== '50'">{{ props.value }}</span>
-        </template>
-      </a-pagination>
-    </div>
+    <!--    <div class="divPagin">-->
+    <!--      <a-pagination v-model:current="pageIndex" :page-size-options="pageSizeOptions" :total="count" show-size-changer-->
+    <!--                    :page-size="pageSize" @showSizeChange="onShowSizeChange" @change="getList">-->
+    <!--        <template #buildOptionText="props">-->
+    <!--          <span v-if="props.value !== '50'">{{ props.value }}</span>-->
+    <!--        </template>-->
+    <!--      </a-pagination>-->
+    <!--    </div>-->
   </div>
 </template>
 <script>
 
-import {getTransformList, delTransform, createTransform} from "@/api/home/transform";
+import {delTransform, createTransform, getTypeList, start, stop} from "@/api/home/transform";
 import CreateFormTrans from "@/components/modules/CreateFormTrans";
-import {executeTransform, previewLogsTransform} from "@/api/home/transform";
+import {previewLogsTransform} from "@/api/home/transform";
 
 const columns = [
   {
     title: '序号',
-    dataIndex: 'idTransformation',
-    key: 'idTransformation',
-    scopedSlots: {customRender: 'idTransformation'},
+    dataIndex: 'typeId',
+    key: 'typeId',
+    customRender: (text, record, index) =>
+      `${
+        index + 1}`,
     width: 100
   },
   {
-    title: '转换名称',
-    dataIndex: 'name',
-    key: 'name',
+    title: '证照类型名称',
+    dataIndex: 'typeName',
+    key: 'typeName',
   },
   {
-    title: '创建人',
-    dataIndex: 'createdUser',
-    key: 'createdUser',
-  },
-  {
-    title: '创建日期',
-    dataIndex: 'createdDate',
-    key: 'createdDate',
-  },
-  {
-    title: '更新日期',
-    dataIndex: 'modifiedDate',
-    key: 'modifiedDate',
-  },
-  {
-    title: '备注',
-    dataIndex: 'description',
-    key: 'description',
+    title: '证照分类代码',
+    dataIndex: 'typeCode',
+    key: 'typeCode',
   },
   {
     title: '操作',
@@ -90,7 +67,7 @@ export default {
       pageSizeOptions: ['1', '3', '9'],
       count: 0,
       columns,
-      databaseList: [],
+      licenseTypeList: [],
       mdl: null,
       visible: false,//是否显示表单
       confirmLoading: false,
@@ -101,11 +78,8 @@ export default {
   },
   methods: {
     async getList() {
-      let r = await getTransformList(
-        this.pageIndex,
-        this.pageSize
-      );
-      this.databaseList = r.data.list;
+      let r = await getTypeList();
+      this.licenseTypeList = r.data;
       this.count = r.data.total;
       console.log(r.data.total);
     },
@@ -143,34 +117,33 @@ export default {
         }
       })
     },
-    async execute(transName) {
+    async start(typeCode) {
       let let_t = this
       let_t.$mc('确定要执行这个转换吗?', async () => {
-        let r = await executeTransform({
-          "transName": transName
+        let r = await start({
+          "type": typeCode
         })
-        if (r.code != 200) {
+        if (r.code != 20000) {
           return this.$msge('执行失败!');
         } else {
-          this.$message.info('执行成功')
+          this.$message.info('执行成功,正在生成中')
           console.log('message', r.message);
-          this.getLog(r.message)
-
         }
       });
 
     },
-    async getLog(logChannelId) {
-      console.log('logChannelId', logChannelId);
-      let res = await previewLogsTransform(logChannelId)
-      console.log('日志',res.data);
-      this.$notification.open({
-        message: '数据抽取执行结果:',
-        description: res.data,
-        onClick: () => {
-          console.log('Notification Clicked!');
-        },
+    async stop(typeCode) {
+      let let_t = this
+      let_t.$mc('确定要暂停这个转换吗?', async () => {
+        let r = await stop(typeCode)
+        if (r.code != 20000) {
+          return this.$msge('暂停失败!');
+        } else {
+          this.$message.info('暂停成功,服务正在关闭中')
+          console.log('message', r.message);
+        }
       });
+
     },
     onShowSizeChange(pageIndex, pageSize) {
       this.pageIndex = pageIndex;

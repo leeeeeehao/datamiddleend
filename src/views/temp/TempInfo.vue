@@ -75,9 +75,9 @@ export default {
       kzList: [
         {id: 1, kzKey: "KZ_XM", kzName: "姓名", type: "varchar",length:12},
         {id: 2, kzKey: "KZ_MZ", kzName: "民族", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_XB", kzName: "性别", type: "varchar",length:12},
         {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
-        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
-        {id: 2, kzKey: "KZ_CSRQ", kzName: "出生日期", type: "varchar",length:12},
+        {id: 2, kzKey: "KZ_ZZ", kzName: "住址", type: "varchar",length:12},
       ]
     };
   },
